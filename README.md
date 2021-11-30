@@ -45,6 +45,12 @@ This can be easily done by simply running this command in cmd (make sure you are
 ```shell
 copy .env.example .env
 ```
+Add stripe api key and secret to .env file:
+```
+STRIPE_KEY=
+STRIPE_SECRET=
+```
+
 After the .env file is there and filled with .env.example content, run:
 ```shell
 php artisan key:generate
@@ -80,4 +86,13 @@ Admin user logins:
 ```shell
 admin@gmail.com
 Admin123.
+```
+Stripe test credentials:
+
+```
+Name on card: Test
+Card number: 4242 4242 4242 4242
+CSV: 123
+Expiration Month: 12
+Expiration Year: 2024
 ```
