@@ -28,4 +28,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mano-profilis', [App\Http\Controllers\HomeController::class, 'getProfile'])->name('profile');
     Route::post('/mano-profilis/el-pastas', [App\Http\Controllers\HomeController::class, 'updateEmail'])->name('email');
     Route::post('/mano-profilis/slaptazodis', [App\Http\Controllers\HomeController::class, 'passwordUpdate'])->name('password');
+    Route::post('/mano-profilis/stripe', [App\Http\Controllers\StripePaymentController::class, 'stripePost'])->name('stripe.post');
 });
