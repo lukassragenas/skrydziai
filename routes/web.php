@@ -26,4 +26,6 @@ require __DIR__.'/auth.php';
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/skrydziai/rezervacija', [App\Http\Controllers\HomeController::class, 'reserveFlight'])->name('reserve');
     Route::get('/mano-profilis', [App\Http\Controllers\HomeController::class, 'getProfile'])->name('profile');
+    Route::post('/mano-profilis/el-pastas', [App\Http\Controllers\HomeController::class, 'updateEmail'])->name('email');
+    Route::post('/mano-profilis/slaptazodis', [App\Http\Controllers\HomeController::class, 'passwordUpdate'])->name('password');
 });

@@ -6,6 +6,7 @@ use App\Models\Airport;
 use App\Models\Flight;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -49,5 +50,29 @@ class HomeController extends Controller
     {
         $tickets = Ticket::where('passeger_id', auth()->user()->id)->get();
         return view('pages.profile', compact('tickets'));
+    }
+
+    public function updateEmail(Request $request)
+    {
+        $input = $request->input('email');
+
+        $user =Auth::user();
+        $user->email = $input;
+        $user->save();
+
+        return redirect()->back()->with('msg', 'El. pašto adresas atnaujintas');
+    }
+
+    public function passwordUpdate(Request $request)
+    {
+        $input = $request->validate([
+            'password' => 'required|confirmed|min:6'
+        ]);
+
+        $user =Auth::user();
+        $user->password = bcrypt($input['password']);
+        $user->save();
+
+        return redirect()->back()->with('msg', 'Slaptažodis atnaujintas');
     }
 }

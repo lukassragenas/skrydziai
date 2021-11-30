@@ -16,8 +16,12 @@ class Flight extends Model
     {
         return $this->hasMany(Ticket::class);
     }
-    public function airport()
+    public function airport_from()
     {
-        return $this->belongsTo(Airport::class);
+        return $this->belongsTo(Airport::class, 'from_airport_id');
+    }
+    public function airport_to()
+    {
+        return $this->belongsTo(Airport::class, 'to_airport_id');
     }
 }

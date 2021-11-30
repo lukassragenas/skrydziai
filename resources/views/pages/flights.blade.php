@@ -7,7 +7,7 @@
                 {!! \Session::get('msg') !!}
             </div>
         @endif
-        <table class="table bg-light">
+        <table class="table table-hover bg-light">
             <thead>
                 <tr>
                     <th scope="col">Nr.</th>
