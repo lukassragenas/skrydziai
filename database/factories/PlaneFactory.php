@@ -14,10 +14,10 @@ class PlaneFactory extends Factory
     public function definition()
     {
         return [
-            'TailNumber' => $this->faker->unique()->text(10),
-            'AirlinesName' => $this->faker->name(),
-            'ModelName' => $this->faker->name(),
-            'AvailableSeats' => rand(100, 250)
+            'tail_number' => $this->faker->unique()->text(10),
+            'airlines_name' => $this->faker->name(),
+            'model_name' => $this->faker->name(),
+            'available_seats' => rand(100, 250)
         ];
     }
 }

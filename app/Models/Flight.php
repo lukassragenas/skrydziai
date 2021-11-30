@@ -4,10 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Ticket;
 
 class Flight extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['PlaneId', 'FromAirportId', 'ToAirportId', 'DepartureTime', 'ArrivalTime', 'Status', 'PassengersCount', 'TicketsPrice'];
+    protected $fillable = ['plane_id', 'from_airport_id', 'to_airport_id', 'departure_time', 'arrival_time', 'status', 'passengers_count', 'tickets_price'];
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+    public function airport()
+    {
+        return $this->belongsTo(Airport::class);
+    }
 }

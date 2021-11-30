@@ -9,5 +9,5 @@ class Plane extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['TailNumber', 'AirlinesName', 'ModelName', 'AvailableSeats'];
+    protected $fillable = ['tail_number', 'airlines_name', 'model_name', 'available_seats'];
 }

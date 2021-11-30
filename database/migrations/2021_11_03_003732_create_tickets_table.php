@@ -15,11 +15,11 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('FlightId');
-            $table->integer('PassegerId');
-            $table->string('SeatNumber');
-            $table->string('SeatClass')->default('Ekonominė');
-            $table->string('Status')->default('Rezervuotas');       
+            $table->integer('flight_id');
+            $table->integer('passeger_id');
+            $table->string('seat_number')->nullable();
+            $table->string('seat_class')->default('Ekonominė');
+            $table->string('status')->default('Rezervuotas');
             $table->timestamps();
         });
     }

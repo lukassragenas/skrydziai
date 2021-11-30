@@ -22,3 +22,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/skrydziai/rezervacija', [App\Http\Controllers\HomeController::class, 'reserveFlight'])->name('reserve');
+    Route::get('/mano-profilis', [App\Http\Controllers\HomeController::class, 'getProfile'])->name('profile');
+});

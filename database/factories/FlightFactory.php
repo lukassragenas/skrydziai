@@ -14,14 +14,14 @@ class FlightFactory extends Factory
     public function definition()
     {
         return [
-            'PlaneId' => rand(1, 100),
-            'FromAirportId' => rand(1, 157),
-            'ToAirportId' => rand(1, 157),
-            'DepartureTime' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
-            'ArrivalTime' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
-            'Status' => 'Laukiamas',
-            'PassengersCount' => rand(100, 250),
-            'TicketsPrice' => rand(125, 575) / 10
+            'plane_id' => rand(1, 100),
+            'from_airport_id' => rand(1, 157),
+            'to_airport_id' => rand(1, 157),
+            'departure_time' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
+            'arrival_time' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
+            'status' => 'Laukiamas',
+            'passengers_count' => rand(100, 250),
+            'tickets_price' => rand(125, 575) / 10
         ];
     }
 }

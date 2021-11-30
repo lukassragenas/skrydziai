@@ -11,7 +11,7 @@
                         <select class="form-control" name="fromAirPort">
                             <option selected>Keliauju iš...</option>
                             @foreach ($airports as $airport)
-                                <option value="{{ $airport->id }}">{{ $airport->Name }}</option>
+                                <option value="{{ $airport->id }}">{{ $airport->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -19,7 +19,7 @@
                         <select class="form-control" name="toAirPort">
                             <option selected>Keliauju į...</option>
                             @foreach ($airports as $airport)
-                                <option value="{{ $airport->id }}">{{ $airport->Name }}</option>
+                                <option value="{{ $airport->id }}">{{ $airport->name }}</option>
                             @endforeach
                         </select>
                     </div>
