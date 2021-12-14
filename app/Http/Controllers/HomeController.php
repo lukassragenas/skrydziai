@@ -49,10 +49,21 @@ class HomeController extends Controller
         return redirect()->back()->with('msg', 'Bilietas rezervuotas, pamatyti rezervuotus bilietus galite savo profilyje');
     }
 
-    public function getProfile()
+    public function getReserved()
     {
-        $tickets = Ticket::where('passeger_id', auth()->user()->id)->get();
-        return view('pages.profile', compact('tickets'));
+        $ticketsReserved = Ticket::where('passeger_id', auth()->user()->id)->where('status', 'Rezervuotas')->paginate(2);
+        return view('pages.profile', compact('ticketsReserved'));
+    }
+
+    public function getPaid()
+    {
+        $ticketsPaid = Ticket::where('passeger_id', auth()->user()->id)->where('status', 'Apmokėtas')->paginate(2);
+        return view('pages.paid-tickets', compact('ticketsPaid'));
+    }
+
+    public function getAccount()
+    {
+        return view('pages.account');
     }
 
     public function updateEmail(Request $request)
