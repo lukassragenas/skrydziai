@@ -6,6 +6,9 @@ use App\Models\Airport;
 use App\Models\Flight;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use App\Http\Requests\ContactFormRequest;
+use App\Notifications\ContactFormMessage;
+use App\Models\Recipient;
 use Auth;
 
 class HomeController extends Controller
@@ -74,5 +77,12 @@ class HomeController extends Controller
         $user->save();
 
         return redirect()->back()->with('msg', 'Slaptažodis atnaujintas');
+    }
+
+    public function sendMail(ContactFormRequest $message, Recipient $recipient)
+    {
+        $recipient->notify(new ContactFormMessage($message));
+
+        return back()->with(['message' => 'Email successfully sent!']);
     }
 }

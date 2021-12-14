@@ -149,12 +149,14 @@
                         </thead>
                         <tbody>
                             @foreach ($tickets->where('status', 'Apmokėtas') as $ticket)
-                                <td>{{ $ticket->flight->id }}</td>
-                                <td>{{ $ticket->flight->departure_time }}</td>
-                                <td>{{ $ticket->flight->airport_from->name }}</td>
-                                <td>{{ $ticket->flight->airport_to->name }}</td>
-                                <td>{{ $ticket->status }}</td>
-                                <td>{{ $ticket->flight->tickets_price }} €</td>
+                                <tr>
+                                    <td>{{ $ticket->flight->id }}</td>
+                                    <td>{{ $ticket->flight->departure_time }}</td>
+                                    <td>{{ $ticket->flight->airport_from->name }}</td>
+                                    <td>{{ $ticket->flight->airport_to->name }}</td>
+                                    <td>{{ $ticket->status }}</td>
+                                    <td>{{ $ticket->flight->tickets_price }} €</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
