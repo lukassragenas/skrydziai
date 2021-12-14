@@ -85,4 +85,13 @@ class HomeController extends Controller
 
         return back()->with(['message' => 'Email successfully sent!']);
     }
+
+    public function deleteFlight($id)
+    {
+        $ticket = Ticket::find($id);
+
+        $ticket->delete();
+
+        return redirect()->back()->with('msg', 'Rezervacija atšaukta');
+    }
 }

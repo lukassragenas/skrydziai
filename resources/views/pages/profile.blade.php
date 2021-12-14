@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container-fluid mt-5">
         @if (\Session::has('msg'))
             <div class="alert alert-success">
                 {!! \Session::get('msg') !!}
@@ -35,27 +35,28 @@
                 <table class="table table-hover bg-light">
                     <thead>
                         <tr>
-                            <th scope="col">Skrydis</th>
-                            <th scope="col">Išvykimo data</th>
-                            <th scope="col">Iš oro uosto</th>
-                            <th scope="col">Į oro uosto</th>
-                            <th scope="col">Statusas</th>
-                            <th scope="col">Kaina</th>
-                            <th scope="col">Pirkti</th>
+                            <th class="align-middle" scope="col">Skrydis</th>
+                            <th class="align-middle" scope="col">Išvykimo data</th>
+                            <th class="align-middle" scope="col">Iš oro uosto</th>
+                            <th class="align-middle" scope="col">Į oro uosto</th>
+                            <th class="align-middle" scope="col">Statusas</th>
+                            <th class="align-middle" scope="col">Kaina</th>
+                            <th class="align-middle" scope="col">Pirkti</th>
+                            <th class="align-middle" scope="col">Atšaukti rezervaciją</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($tickets->where('status', 'Rezervuotas') as $ticket)
                             <tr>
-                                <td>{{ $ticket->flight->id }}</td>
-                                <td>{{ $ticket->flight->departure_time }}</td>
-                                <td>{{ $ticket->flight->airport_from->name }}</td>
-                                <td>{{ $ticket->flight->airport_to->name }}</td>
-                                <td>{{ $ticket->status }}</td>
-                                <td>{{ $ticket->flight->tickets_price }} €</td>
-                                <td>
+                                <td class="align-middle">{{ $ticket->flight->id }}</td>
+                                <td class="align-middle">{{ $ticket->flight->departure_time }}</td>
+                                <td class="align-middle">{{ $ticket->flight->airport_from->name }}</td>
+                                <td class="align-middle">{{ $ticket->flight->airport_to->name }}</td>
+                                <td class="align-middle">{{ $ticket->status }}</td>
+                                <td class="align-middle">{{ $ticket->flight->tickets_price }} €</td>
+                                <td class="align-middle">
                                     @if ($ticket->status == 'Rezervuotas')
-                                        <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
                                             data-target="#exampleModal">
                                             Pirkti bilietą
                                         </button>
@@ -72,9 +73,25 @@
                                                         id="payment-form">
                                                         @csrf
                                                         <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-                                                        <input type="hidden" name="price"
-                                                            value="{{ $ticket->flight->tickets_price }}">
                                                         <div class="modal-body">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="customCheck" name="example1">
+                                                                <label class="custom-control-label" for="customCheck">Domina
+                                                                    kelionės draudimas?Nerizikuokite! Apsidrauskite
+                                                                    medicininių išlaidų ar nelaimingų atsitikimų draudimu
+                                                                    visos kelionės metu ir išvenkite rūpesčių.</label>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="form-group">
+                                                                <label for="price" class="control-label pl-2">Dabartinė
+                                                                    kelionės
+                                                                    kaina:</label>
+                                                                <input type="text" readonly class="form-control-plaintext"
+                                                                    id="price" name="price"
+                                                                    value="{{ $ticket->flight->tickets_price }}">
+                                                            </div>
+                                                            <hr>
                                                             <div class='form-row row'>
                                                                 <div class='col-lg-6 form-group required'>
                                                                     <label class='control-label'>Name on Card</label>
@@ -128,6 +145,13 @@
                                             </div>
                                         </div>
                                     @endif
+                                </td>
+                                <td class="align-middle">
+                                    <form action="{{ route('delete', ['id' => $ticket->id]) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" value="{{ $ticket->id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Atšaukti rezervaciją</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -255,6 +279,18 @@
                     $form.get(0).submit();
                 }
             }
+
+            let price = $('#price').val();
+            console.log(price);
+            $('#customCheck').change(function() {
+                if ($(this).is(":checked")) {
+                    let newPrice = price * 1.05;
+                    $('#payment-form #price').val(newPrice);
+                }
+                else {
+                    $('#payment-form #price').val(price);
+                }
+            });
 
         });
     </script>
