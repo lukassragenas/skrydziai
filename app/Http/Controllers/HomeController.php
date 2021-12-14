@@ -57,10 +57,12 @@ class HomeController extends Controller
 
     public function updateEmail(Request $request)
     {
-        $input = $request->input('email');
+        $input = $request->validate([
+            'email' => 'unique:users|required|email'
+        ]);
 
         $user =Auth::user();
-        $user->email = $input;
+        $user->email = $input['email'];
         $user->save();
 
         return redirect()->back()->with('msg', 'El. pašto adresas atnaujintas');

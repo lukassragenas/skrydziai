@@ -55,96 +55,106 @@
                                 <td class="align-middle">{{ $ticket->status }}</td>
                                 <td class="align-middle">{{ $ticket->flight->tickets_price }} €</td>
                                 <td class="align-middle">
-                                    @if ($ticket->status == 'Rezervuotas')
-                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                            data-target="#exampleModal">
-                                            Pirkti bilietą
-                                        </button>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Apmokėjimas</h5>
-                                                    </div>
-                                                    <form role="form" action="{{ route('stripe.post') }}" method="post"
-                                                        class="require-validation" data-cc-on-file="false"
-                                                        data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
-                                                        id="payment-form">
-                                                        @csrf
-                                                        <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-                                                        <div class="modal-body">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="customCheck" name="example1">
-                                                                <label class="custom-control-label" for="customCheck">Domina
-                                                                    kelionės draudimas?Nerizikuokite! Apsidrauskite
-                                                                    medicininių išlaidų ar nelaimingų atsitikimų draudimu
-                                                                    visos kelionės metu ir išvenkite rūpesčių.</label>
-                                                            </div>
-                                                            <hr>
-                                                            <div class="form-group">
-                                                                <label for="price" class="control-label pl-2">Dabartinė
-                                                                    kelionės
-                                                                    kaina:</label>
-                                                                <input type="text" readonly class="form-control-plaintext"
-                                                                    id="price" name="price"
-                                                                    value="{{ $ticket->flight->tickets_price }}">
-                                                            </div>
-                                                            <hr>
-                                                            <div class='form-row row'>
-                                                                <div class='col-lg-6 form-group required'>
-                                                                    <label class='control-label'>Name on Card</label>
-                                                                    <input class='form-control' type='text'>
-                                                                </div>
-                                                                <div class='col-lg-6 form-group required'>
-                                                                    <label class='control-label'>Card Number</label>
-                                                                    <input autocomplete='off'
-                                                                        class='form-control card-number' type='text'>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class='form-row row'>
-                                                                <div class='col-xs-12 col-md-4 form-group cvc required'>
-                                                                    <label class='control-label'>CVC</label> <input
-                                                                        autocomplete='off' class='form-control card-cvc'
-                                                                        placeholder='ex. 311' size='4' type='text'>
-                                                                </div>
-                                                                <div
-                                                                    class='col-xs-12 col-md-4 form-group expiration required'>
-                                                                    <label class='control-label'>Expiration
-                                                                        Month</label> <input
-                                                                        class='form-control card-expiry-month'
-                                                                        placeholder='MM' size='2' type='text'>
-                                                                </div>
-                                                                <div
-                                                                    class='col-xs-12 col-md-4 form-group expiration required'>
-                                                                    <label class='control-label'>Expiration
-                                                                        Year</label>
-                                                                    <input class='form-control card-expiry-year'
-                                                                        placeholder='YYYY' size='4' type='text'>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class='form-row row'>
-                                                                <div class='col-md-12 error form-group d-none'>
-                                                                    <div class='alert-danger alert'>Please correct
-                                                                        the
-                                                                        errors and try
-                                                                        again.</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Atšaukti</button>
-                                                            <button type="submit" class="btn btn-success">Apmokėti</button>
-                                                        </div>
-                                                    </form>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+                                        data-target="#modal{{ $ticket->id }}">
+                                        Pirkti bilietą
+                                    </button>
+                                    <div class="modal fade" id="modal{{ $ticket->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="modalLabel-{{ $ticket->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="ModalLabel-{{ $ticket->id }}">
+                                                        Apmokėjimas</h5>
                                                 </div>
+                                                <form role="form" action="{{ route('stripe.post') }}" method="post"
+                                                    class="require-validation" data-cc-on-file="false"
+                                                    data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                                                    id="payment-form-{{ $ticket->id }}">
+                                                    @csrf
+                                                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                                                    <div class="modal-body">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customCheck-{{ $ticket->id }}" name="example1">
+                                                            <label class="custom-control-label"
+                                                                for="customCheck-{{ $ticket->id }}">Domina
+                                                                kelionės draudimas?Nerizikuokite! Apsidrauskite
+                                                                medicininių išlaidų ar nelaimingų atsitikimų draudimu
+                                                                visos kelionės metu ir išvenkite rūpesčių.</label>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="form-group">
+                                                            <label for="price" class="control-label pl-2">Dabartinė
+                                                                kelionės
+                                                                kaina:</label>
+                                                            <input type="text" readonly class="form-control-plaintext"
+                                                                id="price-{{ $ticket->id }}" name="price"
+                                                                value="{{ $ticket->flight->tickets_price }}">
+                                                        </div>
+                                                        <hr>
+                                                        <div class='form-row row'>
+                                                            <div class='col-lg-6 form-group required'>
+                                                                <label class='control-label'>Name on Card</label>
+                                                                <input class='form-control' type='text'>
+                                                            </div>
+                                                            <div class='col-lg-6 form-group required'>
+                                                                <label class='control-label'>Card Number</label>
+                                                                <input autocomplete='off' class='form-control card-number'
+                                                                    type='text'>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class='form-row row'>
+                                                            <div class='col-xs-12 col-md-4 form-group cvc required'>
+                                                                <label class='control-label'>CVC</label> <input
+                                                                    autocomplete='off' class='form-control card-cvc'
+                                                                    placeholder='ex. 311' size='4' type='text'>
+                                                            </div>
+                                                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                                                <label class='control-label'>Expiration
+                                                                    Month</label> <input
+                                                                    class='form-control card-expiry-month' placeholder='MM'
+                                                                    size='2' type='text'>
+                                                            </div>
+                                                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                                                <label class='control-label'>Expiration
+                                                                    Year</label>
+                                                                <input class='form-control card-expiry-year'
+                                                                    placeholder='YYYY' size='4' type='text'>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class='form-row row'>
+                                                            <div class='col-md-12 error form-group d-none'>
+                                                                <div class='alert-danger alert'>Please correct
+                                                                    the
+                                                                    errors and try
+                                                                    again.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        let price{{ $ticket->id }} = $('#payment-form-{{ $ticket->id }} #price-{{ $ticket->id }}').val();
+                                                        $('#customCheck-{{ $ticket->id }}').change(function() {
+                                                            if ($(this).is(":checked")) {
+                                                                let newPrice = price{{ $ticket->id }} * 1.05;
+                                                                var amt = parseFloat(newPrice);
+                                                                $('#payment-form-{{ $ticket->id }} #price-{{ $ticket->id }}').val(amt.toFixed(2));
+                                                            } else {
+                                                                $('#payment-form-{{ $ticket->id }} #price-{{ $ticket->id }}').val(price{{ $ticket->id }});
+                                                            }
+                                                        });
+                                                    </script>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Atšaukti</button>
+                                                        <button type="submit" class="btn btn-success">Apmokėti</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
-                                    @endif
+                                    </div>
                                 </td>
                                 <td class="align-middle">
                                     <form action="{{ route('delete', ['id' => $ticket->id]) }}" method="post">
@@ -279,19 +289,6 @@
                     $form.get(0).submit();
                 }
             }
-
-            let price = $('#price').val();
-            console.log(price);
-            $('#customCheck').change(function() {
-                if ($(this).is(":checked")) {
-                    let newPrice = price * 1.05;
-                    $('#payment-form #price').val(newPrice);
-                }
-                else {
-                    $('#payment-form #price').val(price);
-                }
-            });
-
         });
     </script>
 @endsection
